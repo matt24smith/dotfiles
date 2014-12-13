@@ -4,6 +4,7 @@ dotfiles
 ===================
 ![screenshot](https://github.com/mscoutermarsh/dotfiles/blob/master/screenshot.png)
 (Here's what my setup looks like. Vim/Tmux)
+matt was here
 
 ## Installation
 
