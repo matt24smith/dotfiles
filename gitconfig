@@ -22,7 +22,7 @@
 [include]
   path = .gitconfig.local
 [commit]
-	template = /Users/mike/.gitmessage
+	template = /Users/matt/.gitmessage
 [user]
   name = Matt Smith 
   email = matt24smith@gmail.com 
