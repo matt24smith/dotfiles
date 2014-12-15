@@ -3,7 +3,7 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-export PROMPT='%F{cyan}${_prompt_sorin_pwd}%f${git_info:+${(e)git_info[prompt]}}%(!. %B%F{red}#%f%b.)${editor_info[keymap]} '
+export PROMPT='\[\e]0;\w\a\]\n\[\e[32m\]\u@\h: \[\e[33m\]\w\[\e[0m\]\n\$ '
 
 # history settings
 setopt appendhistory histignoredups
@@ -41,3 +41,22 @@ export PATH=".git/safe/../../bin:$PATH"
 
 # aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
+
+# Alt-S inserts "sudo" at start of line. i think.
+insert_sudo () { zle beginning-of-line; zle -U "sudo " }
+zle -N insert-sudo insert_sudo
+bindkey "^[s" insert-sudo
+
+#Rename session when SSH to somewhere
+case $TERM in
+  xterm*)
+    precmd () {print -Pn "\e]0;%m: %~\a"}
+    ssh(){
+      PRENAME="`dcop $KONSOLE_DCOP_SESSION sessionName`";
+      dcop "$KONSOLE_DCOP_SESSION" renameSession "$@";
+      /usr/bin/ssh "$@";
+      dcop "$KONSOLE_DCOP_SESSION" renameSession "$PRENAME" }
+      ;;
+  esac
+
+
